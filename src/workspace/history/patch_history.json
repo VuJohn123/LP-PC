@@ -1,0 +1,18 @@
+[
+  {
+    "apk": "C:/Users/dell/Downloads/com.locket.Locket-545-merged.apk",
+    "mode": "license:auto,iap:dex,save_purchase,auto_repeat,sig_disable,sig_zip_disable",
+    "success": false,
+    "output": "",
+    "patches": [],
+    "timestamp": 1780218832.533503
+  },
+  {
+    "apk": "D:/DevTools/Scripts/Python/Projects/LP_PC_Suite/src/tests/com.paradyme.solarsmash.apk",
+    "mode": "iap:dex,save_purchase,auto_repeat,sig_disable,sig_zip_disable",
+    "success": false,
+    "output": "",
+    "patches": [],
+    "timestamp": 1779950809.4907293
+  }
+]
