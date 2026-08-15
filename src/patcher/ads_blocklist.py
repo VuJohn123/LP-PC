@@ -1,4 +1,5 @@
 import os
+import re
 from core.smali_utils import get_all_smali_files, REGEX_ADS_URL
 
 class AdsBlocklistPatcher:
