@@ -78,7 +78,7 @@ class AutoUpdater:
             try:
                 with open(self.patch_history_file, 'r', encoding='utf-8') as f:
                     return json.load(f)
-            except:
+            except Exception:
                 return []
         return []
 

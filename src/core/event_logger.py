@@ -75,7 +75,7 @@ class EventLogger:
                 try:
                     with open(path, 'r', encoding='utf-8', errors='ignore') as f:
                         content = f.read()
-                except: continue
+                except Exception: continue
 
                 modified = False
                 for method in billing_methods:

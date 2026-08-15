@@ -47,7 +47,7 @@ class IAPDexPatcher:
                 continue
             try:
                 content = self._read_file(filepath)
-            except:
+            except Exception:
                 skipped_files += 1
                 continue
 
@@ -77,7 +77,7 @@ class IAPDexPatcher:
                     self._write_file(filepath, content)
                     patched_files += 1
                     self.log(f"[+] [IAPDexPatcher] Đã vá: {os.path.basename(filepath)}")
-                except:
+                except Exception:
                     skipped_files += 1
 
         report['total_patched'] = patched_files

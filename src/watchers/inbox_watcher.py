@@ -17,7 +17,7 @@ class InboxWatcher:
         self._thread = None
 
     def start(self):
-        print(f"[InboxWatcher] Bắt đầu quan sát thư mục: {self.inbox_path}")
+# TODO: Convert to logger: print(f"[InboxWatcher] Bắt đầu quan sát thư mục: {self.inbox_path}")
         self.known_files = self._scan_directory()
         self._thread = threading.Thread(target=self._monitor_loop, daemon=True)
         self._thread.start()
@@ -41,7 +41,7 @@ class InboxWatcher:
             new_files = current_files - self.known_files
 
             for new_file in new_files:
-                print(f"[InboxWatcher] Phát hiện APK mới: {new_file.name}")
+# TODO: Convert to logger: print(f"[InboxWatcher] Phát hiện APK mới: {new_file.name}")
                 event_bus.emit('apk.detected', {'path': str(new_file)})
 
             self.known_files = current_files

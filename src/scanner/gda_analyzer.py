@@ -2,6 +2,9 @@ import subprocess
 import os
 import tempfile
 import re
+import logging
+
+logger = logging.getLogger(__name__)
 
 class GDAAnalyzer:
     def __init__(self, gda_path=None):
@@ -10,10 +13,10 @@ class GDAAnalyzer:
         )
 
     def analyze(self, apk_path, output_report=None):
-        print(f"[*] [GDA] Analyzing {os.path.basename(apk_path)}...")
+        logger.debug(f"[*] [GDA] Analyzing {os.path.basename(apk_path)}...")
         findings = {'license_classes': [], 'iap_classes': [], 'ad_urls': []}
         if not os.path.exists(self.gda_exe):
-            print("[!] GDA not found. Skipping.")
+            logger.warning("[!] GDA not found. Skipping.")
             return findings
         
         if not output_report:
@@ -37,10 +40,10 @@ class GDAAnalyzer:
                 ad_urls = re.findall(r'https?://[^"\'\s]+(?:doubleclick|admob|applovin|unityads|googlesyndication)[^"\'\s]*', content)
                 findings['ad_urls'] = ad_urls[:20]
         except Exception as e:
-            print(f"[!] GDA analysis error: {e}")
+            logger.error(f"[!] GDA analysis error: {e}")
         finally:
             if output_report and os.path.exists(output_report):
                 try: os.remove(output_report)
-                except: pass
+                except Exception: pass
         
         return findings

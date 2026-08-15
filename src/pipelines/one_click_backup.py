@@ -13,7 +13,7 @@ class OneClickBackupPipeline:
 
     def on_apk_detected(self, data):
         apk_path = data['path']
-        print(f"[OneClickBackup] Đang sao lưu: {apk_path}")
+# TODO: Convert to logger: print(f"[OneClickBackup] Đang sao lưu: {apk_path}")
         dest = os.path.join(self.backup_dir, os.path.basename(apk_path))
         shutil.copy2(apk_path, dest)
-        print(f"[OneClickBackup] Đã sao lưu vào: {dest}")
+# TODO: Convert to logger: print(f"[OneClickBackup] Đã sao lưu vào: {dest}")

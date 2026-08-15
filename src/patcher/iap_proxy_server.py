@@ -12,7 +12,7 @@ class IAPProxyHandler(BaseHTTPRequestHandler):
         post_data = self.rfile.read(content_length)
         try:
             request = json.loads(post_data.decode('utf-8'))
-        except:
+        except Exception:
             request = {}
 
         method = request.get('method', self.path.strip('/'))

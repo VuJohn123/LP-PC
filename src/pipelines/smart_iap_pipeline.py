@@ -17,7 +17,7 @@ class SmartIAPPipeline:
         has_iap = any(f['type'] == 'iap' for f in findings)
         
         if has_iap:
-            print(f"[SmartIAP] Phát hiện IAP trong {os.path.basename(apk_path)}, tự động vá...")
+# TODO: Convert to logger: print(f"[SmartIAP] Phát hiện IAP trong {os.path.basename(apk_path)}, tự động vá...")
             self._apply_iap_patch(apk_path)
 
     def _apply_iap_patch(self, apk_path):
@@ -35,7 +35,7 @@ class SmartIAPPipeline:
             os.makedirs(output_dir, exist_ok=True)
             dest = os.path.join(output_dir, os.path.basename(signed_apk))
             shutil.copy(signed_apk, dest)
-            print(f"[SmartIAP] APK đã vá được lưu tại: {dest}")
+# TODO: Convert to logger: print(f"[SmartIAP] APK đã vá được lưu tại: {dest}")
             event_bus.emit('apk.patched', {'path': dest, 'original': apk_path})
         finally:
             shutil.rmtree(temp_dir, ignore_errors=True)

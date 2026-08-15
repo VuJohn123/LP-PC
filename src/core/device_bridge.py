@@ -20,5 +20,5 @@ def check_root():
     try:
         result = subprocess.run(['adb', 'shell', 'su', '-c', 'id'], capture_output=True, text=True, timeout=5)
         return 'uid=0' in result.stdout
-    except:
+    except Exception:
         return False
