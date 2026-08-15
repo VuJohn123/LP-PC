@@ -51,6 +51,9 @@ REGEX_SERVERMANAGEDPOLICY_CONSTRUCTOR = re.compile(
 REGEX_INVOKE_LICENSE = re.compile(r'.*invoke.*LicenseChecker.*\n')
 REGEX_INVOKE_ILICENSING = re.compile(r'.*invoke.*ILicensingService.*\n')
 REGEX_MANIFEST_PERMISSION = re.compile(r'<uses-permission\s+android:name="([^"]+)"\s*/?>', re.IGNORECASE)
+REGEX_MANIFEST_ACTIVITY = re.compile(r'<activity[^>]*android:name="([^"]+)"[^/]*/?>', re.IGNORECASE)
+REGEX_MANIFEST_RECEIVER = re.compile(r'<receiver[^>]*android:name="([^"]+)"[^/]*/?>', re.IGNORECASE)
+REGEX_ADS_URL = re.compile(r'"https?://[^\"]*(?:doubleclick\.net|googleadservices\.com|googlesyndication\.com|admob\.com)[^\"]*"', re.IGNORECASE)
 
 
 def get_smali_dirs(decompiled_path):
