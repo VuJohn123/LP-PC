@@ -1,4 +1,20 @@
 ```
+# Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+
+# Dependencies
+.venv/
+venv/
+env/
+pip-log.txt
+pip-selfcheck.json
+
+# Build artifacts
+build/
+dist/
+*.egg
+*.egg-info/
 ```
