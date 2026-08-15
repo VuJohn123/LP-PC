@@ -1,8 +1,11 @@
 import os
 import time
+import logging
 from pathlib import Path
 import threading
 from core.event_bus import event_bus
+
+logger = logging.getLogger(__name__)
 
 class InboxWatcher:
     """
@@ -17,7 +20,7 @@ class InboxWatcher:
         self._thread = None
 
     def start(self):
-# TODO: Convert to logger: print(f"[InboxWatcher] Bắt đầu quan sát thư mục: {self.inbox_path}")
+        logger.info(f"Bắt đầu quan sát thư mục: {self.inbox_path}")
         self.known_files = self._scan_directory()
         self._thread = threading.Thread(target=self._monitor_loop, daemon=True)
         self._thread.start()
@@ -41,7 +44,7 @@ class InboxWatcher:
             new_files = current_files - self.known_files
 
             for new_file in new_files:
-# TODO: Convert to logger: print(f"[InboxWatcher] Phát hiện APK mới: {new_file.name}")
+                logger.info(f"Phát hiện APK mới: {new_file.name}")
                 event_bus.emit('apk.detected', {'path': str(new_file)})
 
             self.known_files = current_files

@@ -1,6 +1,9 @@
 import shutil
 import os
+import logging
 from core.event_bus import event_bus
+
+logger = logging.getLogger(__name__)
 
 class OneClickBackupPipeline:
     """
@@ -13,7 +16,11 @@ class OneClickBackupPipeline:
 
     def on_apk_detected(self, data):
         apk_path = data['path']
-# TODO: Convert to logger: print(f"[OneClickBackup] Đang sao lưu: {apk_path}")
-        dest = os.path.join(self.backup_dir, os.path.basename(apk_path))
-        shutil.copy2(apk_path, dest)
-# TODO: Convert to logger: print(f"[OneClickBackup] Đã sao lưu vào: {dest}")
+        try:
+            logger.info(f"Đang sao lưu: {apk_path}")
+            dest = os.path.join(self.backup_dir, os.path.basename(apk_path))
+            shutil.copy2(apk_path, dest)
+            logger.info(f"Đã sao lưu vào: {dest}")
+        except Exception as e:
+            logger.error(f"Lỗi khi sao lưu {apk_path}: {e}", exc_info=True)
+            raise

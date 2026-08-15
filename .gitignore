@@ -1,20 +1,38 @@
 ```
-# Python
+# Python cache
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 
-# Dependencies
-.venv/
-venv/
-env/
-pip-log.txt
-pip-selfcheck.json
-
 # Build artifacts
 build/
 dist/
-*.egg
 *.egg-info/
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.local
+*.env.*
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
+
+# Coverage reports
+.coverage
+coverage/
+htmlcov/
+
+# MyPy cache
+.mypy_cache/
+
+# Pytest cache
+.pytest_cache/
 ```
