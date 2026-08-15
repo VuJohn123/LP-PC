@@ -3,6 +3,9 @@ from patcher.iap_bypass import IAPBypass
 from patcher.iap_manager import IAPManager
 import os, tempfile, shutil
 from core.apk_utils import decompile_apk, recompile_apk, sign_apk
+import logging
+
+logger = logging.getLogger(__name__)
 
 class SmartIAPPipeline:
     """
@@ -17,7 +20,7 @@ class SmartIAPPipeline:
         has_iap = any(f['type'] == 'iap' for f in findings)
         
         if has_iap:
-# TODO: Convert to logger: print(f"[SmartIAP] Phát hiện IAP trong {os.path.basename(apk_path)}, tự động vá...")
+            logger.info(f"Phát hiện IAP trong {os.path.basename(apk_path)}, tự động vá...")
             self._apply_iap_patch(apk_path)
 
     def _apply_iap_patch(self, apk_path):
@@ -35,7 +38,10 @@ class SmartIAPPipeline:
             os.makedirs(output_dir, exist_ok=True)
             dest = os.path.join(output_dir, os.path.basename(signed_apk))
             shutil.copy(signed_apk, dest)
-# TODO: Convert to logger: print(f"[SmartIAP] APK đã vá được lưu tại: {dest}")
+            logger.info(f"APK đã vá được lưu tại: {dest}")
             event_bus.emit('apk.patched', {'path': dest, 'original': apk_path})
+        except Exception as e:
+            logger.error(f"Lỗi khi vá IAP: {e}", exc_info=True)
+            raise
         finally:
             shutil.rmtree(temp_dir, ignore_errors=True)

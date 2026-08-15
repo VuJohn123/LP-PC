@@ -90,13 +90,13 @@ class AppListWidget(QListWidget):
                 data['package'], data['name'], data['colors'], data['findings']))
             menu.addAction("Create Modified APK", lambda: self.app_context_menu_requested.emit(
                 data['package'], data['name'], data['colors'], data['findings']))  # trigger rebuild dialog
-            menu.addAction("Remove License Verification", lambda: None  # "License removal"))
-            menu.addAction("Remove Google Ads", lambda: None  # "Ads removal"))
-            menu.addAction("Custom Patch", lambda: None  # "Custom patch"))
+            menu.addAction("Remove License Verification", lambda: None)  # "License removal"))
+            menu.addAction("Remove Google Ads", lambda: None)  # "Ads removal"))
+            menu.addAction("Custom Patch", lambda: None)  # "Custom patch"))
             menu.addSeparator()
-            menu.addAction("Backup App", lambda: None  # "Backup"))
-            menu.addAction("Restore App", lambda: None  # "Restore"))
-            menu.addAction("Launch App", lambda: None  # "Launch"))
+            menu.addAction("Backup App", lambda: None)  # "Backup"))
+            menu.addAction("Restore App", lambda: None)  # "Restore"))
+            menu.addAction("Launch App", lambda: None)  # "Launch"))
             menu.exec(self.viewport().mapToGlobal(pos))
 
     def filter(self, text, filter_type):
