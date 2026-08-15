@@ -37,7 +37,7 @@ class AppClassifier:
                         continue
                     if re.search(r'(license|licensing|lvl|LicenseCheck)', class_name, re.IGNORECASE):
                         return True
-        except:
+        except Exception:
             pass
         return False
 
@@ -58,7 +58,7 @@ class AppClassifier:
                     data = z.read(dex_files[0])
                     if len(data) >= 2:
                         return data
-        except:
+        except Exception:
             pass
         return None
 
@@ -99,11 +99,11 @@ class AppDeepAnalyzer:
         package = self.apk.get_package()
         try:
             app_name = self.apk.get_app_name()
-        except:
+        except Exception:
             app_name = Path(self.apk_path).stem if self.apk_path else "Unknown"
         try:
             version = self.apk.get_androidversion_name()
-        except:
+        except Exception:
             version = ''
         size = Path(self.apk_path).stat().st_size if self.apk_path and Path(self.apk_path).exists() else 0
         return {'app_name': app_name, 'package': package, 'version': version, 'apk_path': self.apk_path, 'size': size}
@@ -118,9 +118,9 @@ class AppDeepAnalyzer:
                             data = z.read(name)
                             if len(data) >= 2:
                                 dex_list.append((name, data))
-                        except:
+                        except Exception:
                             pass
-        except:
+        except Exception:
             pass
         return dex_list
 
@@ -152,7 +152,7 @@ class AppDeepAnalyzer:
                             'details': ['License check detected'], 'action': 'remove_license'
                         })
                         return
-            except:
+            except Exception:
                 continue
         self.findings.append({
             'type': 'no_license', 'color': None,
@@ -241,7 +241,7 @@ class AppDeepAnalyzer:
                                 'description': 'App may detect root access', 'details': [], 'action': None
                             })
                             return
-            except:
+            except Exception:
                 continue
 
     def _check_lp_detection(self):
@@ -256,5 +256,5 @@ class AppDeepAnalyzer:
                             'description': 'App may detect Lucky Patcher', 'details': [], 'action': None
                         })
                         return
-            except:
+            except Exception:
                 continue

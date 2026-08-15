@@ -30,7 +30,7 @@ class IAPBypass:
                 sock = socket.create_connection(('localhost', self.proxy_port), timeout=1)
                 sock.close()
                 return True
-            except:
+            except Exception:
                 time.sleep(0.5)
         return False
 

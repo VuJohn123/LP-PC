@@ -39,7 +39,7 @@ class Watermarker:
                 if Watermarker.MARKER_FILE in z.namelist():
                     data = z.read(Watermarker.MARKER_FILE)
                     return json.loads(data.decode('utf-8'))
-        except:
+        except Exception:
             pass
         return None
 
@@ -53,6 +53,6 @@ class Watermarker:
             )
             if result.returncode == 0 and result.stdout.strip():
                 return json.loads(result.stdout)
-        except:
+        except Exception:
             pass
         return None
