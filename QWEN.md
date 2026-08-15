@@ -214,7 +214,7 @@ git commit -m "type: mô tả ngắn gọn, đúng scope thay đổi"
 
 ---
 
-## 11. Rủi ro đặc thù của Qwen — bắt buộc lưu ý
+## 10. Rủi ro đặc thù của Qwen — bắt buộc lưu ý
 
 Dựa trên các vấn đề đã ghi nhận thực tế với dòng Qwen (Coder/3.5/3.6),
 khác với Claude ở các điểm sau — cần bù bằng quy tắc riêng:
@@ -243,7 +243,61 @@ khác với Claude ở các điểm sau — cần bù bằng quy tắc riêng:
 
 ---
 
+## 11. Tận dụng cấu hình thật của Qwen Code để chạy command nhanh hơn
+
+`QWEN.md` chỉ là hướng dẫn dạng văn bản — model vẫn có thể quên giữa
+task dài (xem mục 11). Để ép hành vi chắc chắn hơn thay vì chỉ "nhắc",
+dùng thêm các cơ chế cấu hình thật của Qwen Code trong `.qwen/settings.json`:
+
+### 13.1 Permissions — tự động allow lệnh an toàn, chặn lệnh nguy hiểm
+```jsonc
+{
+  "permissions": {
+    "allow": [
+      "Bash(git status)", "Bash(git diff*)", "Bash(git log*)",
+      "Bash(npm run test*)", "Bash(npm run lint*)",
+      "Bash(pytest*)", "Bash(python -m pytest*)"
+    ],
+    "ask": [
+      "Bash(git push*)", "Bash(git commit*)", "Edit"
+    ],
+    "deny": [
+      "Bash(rm -rf*)", "Bash(git push --force*)",
+      "Read(.env)", "Read(**/*.pem)", "Read(**/secrets/**)"
+    ]
+  }
+}
+```
+Lợi ích trực tiếp cho "hiệu suất": lệnh đọc/test/lint chạy không bị
+dừng lại chờ xác nhận thủ công mỗi lần → vòng lặp Explore→Verify ở
+mục 9 chạy mượt hơn nhiều, trong khi lệnh phá hoại vẫn bị chặn cứng ở
+tầng hệ thống (không phụ thuộc model có "nhớ" quy tắc hay không).
+
+### 13.2 Skills — đóng gói workflow lặp lại thành lệnh gọi 1 phát
+Nếu 1 quy trình lặp đi lặp lại (vd: "build + test + patch smali +
+verify" cho LP-PC), đóng gói thành Skill trong `.qwen/skills/<name>/SKILL.md`
+thay vì để model tự suy luận lại từng bước mỗi lần — giảm token, giảm
+sai sót, tăng tốc đáng kể vì model chỉ cần gọi đúng skill.
+
+### 13.3 Subagents — tách việc nặng ra khỏi context chính
+Với việc tốn nhiều context nhưng không cần giữ trong luồng chính (vd:
+chạy review toàn bộ file lớn, chạy test suite dài) → dùng subagent
+(`/agents create`) riêng cho việc đó. Context chính không bị phình to
+bởi log dài dòng, giảm rủi ro "quên" instruction gốc đã nêu ở mục 11.
+
+### 13.4 Hooks — ép nhắc lại rule quan trọng đúng lúc cần
+Với rule sống còn nhưng dễ bị quên giữa task dài (vd: "luôn xác minh
+trước khi mark completed", "không push force") — nếu Qwen Code hỗ trợ
+hook dạng UserPromptSubmit trong bản đang dùng, cấu hình để bơm lại
+đúng rule đó vào ngay trước lượt xử lý quan trọng, thay vì chỉ dựa vào
+việc model tự nhớ từ đầu file. Model nhỏ/local tolerate khoảng cách
+giữa instruction và lúc cần dùng kém hơn hẳn model lớn — rule càng gần
+lượt hành động thật, tỷ lệ tuân thủ càng cao.
+
+---
+
 ## 12. Khi kết thúc task
+
 
 Luôn báo cáo theo format:
 ```
