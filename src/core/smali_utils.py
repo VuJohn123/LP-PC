@@ -27,29 +27,29 @@ except ImportError:
         return json.dumps(data)
     JSON_FAST = False
 
-# Regex đã biên dịch
+# Regex đã biên dịch - Cải tiến để match chính xác Smali bytecode với nhiều modifiers
 REGEX_BOOLEAN_METHOD = re.compile(
-    r'(\.method\s+(?:public|private|static)\s+(?:final\s+)?(\S+)\s*\(.*?\)\s*Z\s*.*?\.end\s+method)',
+    r'(\.method\s+(?:(?:public|private|protected)\s+)*(?:static\s+)?(?:final\s+)?\w+\s*\([^)]*\)Z[\s\S]*?\.end\s+method)',
     re.DOTALL
 )
 REGEX_IAP_BILLING_METHOD = re.compile(
-    r'(\.method\s+(?:public|private|static)\s+(?:final\s+)?(\S+)\s*\([^)]*\)\s*(V|Landroid/os/Bundle;)\s*.*?\.end\s+method)',
+    r'(\.method\s+(?:(?:public|private|protected)\s+)*(?:static\s+)?(?:final\s+)?\w+\s*\([^)]*\)(?:V|Landroid/os/Bundle;)[\s\S]*?\.end\s+method)',
     re.DOTALL
 )
 REGEX_SIGNATURE_METHOD = re.compile(
-    r'(\.method\s+(?:public|private|static)\s+(?:final\s+)?(\w+)\s*\(.*?\)\s*Z\s*\.registers\s+\d+\s*.*?\.end\s+method)',
+    r'(\.method\s+(?:(?:public|private|protected)\s+)*(?:static\s+)?(?:final\s+)?\w+\s*\([^)]*\)Z[\s\S]*?\.end\s+method)',
     re.DOTALL
 )
 REGEX_INTEGRITY_METHOD = re.compile(
-    r'(\.method\s+(?:public|private|static)\s+(?:final\s+)?(\S+)\s*\(.*?\)\s*Z\s*.*?\.end\s+method)',
+    r'(\.method\s+(?:(?:public|private|protected)\s+)*(?:static\s+)?(?:final\s+)?\w+\s*\([^)]*\)Z[\s\S]*?\.end\s+method)',
     re.DOTALL
 )
 REGEX_SERVERMANAGEDPOLICY_CONSTRUCTOR = re.compile(
     r'(\.method\s+public\s+constructor\s+<init>\(.*?\)V\s*.*?\.end\s+method)',
     re.DOTALL
 )
-REGEX_INVOKE_LICENSE = re.compile(r'.*invoke.*LicenseChecker.*\n')
-REGEX_INVOKE_ILICENSING = re.compile(r'.*invoke.*ILicensingService.*\n')
+REGEX_INVOKE_LICENSE = re.compile(r'.*invoke.*LicenseChecker.*')
+REGEX_INVOKE_ILICENSING = re.compile(r'.*invoke.*ILicensingService.*')
 REGEX_MANIFEST_PERMISSION = re.compile(r'<uses-permission\s+android:name="([^"]+)"\s*/?>', re.IGNORECASE)
 REGEX_MANIFEST_ACTIVITY = re.compile(r'<activity[^>]*android:name="([^"]+)"[^/]*/?>', re.IGNORECASE)
 REGEX_MANIFEST_RECEIVER = re.compile(r'<receiver[^>]*android:name="([^"]+)"[^/]*/?>', re.IGNORECASE)
