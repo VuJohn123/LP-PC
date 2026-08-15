@@ -1,4 +1,5 @@
 import os
+import re
 from core.smali_utils import REGEX_MANIFEST_ACTIVITY, REGEX_MANIFEST_RECEIVER
 
 class AdRemover:
